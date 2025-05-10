@@ -14,13 +14,7 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/juhancuks-projects/v0-vertura-website-inspiration](https://vercel.com/juhancuks-projects/v0-vertura-website-inspiration)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/NWDBiFvynim](https://v0.dev/chat/projects/NWDBiFvynim)**
+**[https://vertura.vercel.app](https://vertura.vercel.app)**
 
 ## How It Works
 
