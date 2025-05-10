@@ -42,15 +42,12 @@ export default function PremiumIntro() {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay gelap agar teks tetap terbaca */}
       <div className="absolute inset-0 bg-black/50 z-0" />
 
-      {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-10 z-10">
         <div className="h-full w-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTZoLTJ2LTRoMnY0eiIvPjwvZz48L2c+PC9zdmc+')]" />
       </div>
 
-      {/* Animated content */}
       <div className="relative w-full max-w-2xl mx-auto px-4 z-20">
         <motion.div
           className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg overflow-hidden"
@@ -230,7 +227,7 @@ export default function PremiumIntro() {
               transition={{ delay: 1, duration: 0.8 }}
             />
             <motion.p
-              className="text-xl md:text-2xl text-white/80"
+              className="text-sm md:text-2xl text-white/80"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5, duration: 0.8 }}
