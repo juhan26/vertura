@@ -18,12 +18,12 @@ export default function PremiumIntro() {
   useEffect(() => {
     const bgInterval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % gifBackgrounds.length);
-    }, 5000);
+    }, 3000);
 
     const timers = [
       setTimeout(() => setStep(1), 1000),
-      setTimeout(() => setStep(2), 3000),
-      setTimeout(() => setStep(3), 4500),
+      setTimeout(() => setStep(2), 1500),
+      setTimeout(() => setStep(3), 4800),
       setTimeout(() => router.push("/shop"), 8500),
     ];
 
@@ -118,7 +118,7 @@ export default function PremiumIntro() {
                 className="w-1/2"
               >
                 <div className="text-white/70 text-xs">PASSENGER</div>
-                <div className="text-white font-medium">CULTURE EXPLORER</div>
+                <div className="text-white font-medium">VERTURER PASS</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -127,7 +127,7 @@ export default function PremiumIntro() {
                 className="w-1/2 text-right"
               >
                 <div className="text-white/70 text-xs">DESTINATION</div>
-                <div className="text-white font-medium">VERTURA COLLECTION</div>
+                <div className="text-white font-medium">YOU</div>
               </motion.div>
             </div>
 
@@ -139,7 +139,7 @@ export default function PremiumIntro() {
                 className="w-1/3"
               >
                 <div className="text-white/70 text-xs">FLIGHT</div>
-                <div className="text-white font-medium">VT-2023</div>
+                <div className="text-white font-medium">VT-2025</div>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -157,7 +157,7 @@ export default function PremiumIntro() {
                 className="w-1/3 text-right"
               >
                 <div className="text-white/70 text-xs">SEAT</div>
-                <div className="text-white font-medium">FIRST CLASS</div>
+                <div className="text-white font-medium">CREATIVE CLASS</div>
               </motion.div>
             </div>
           </div>

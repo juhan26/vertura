@@ -38,9 +38,9 @@ export default function Home() {
           />
           <Button
             onClick={() => setStarted(true)}
-            className="bg-white text-black hover:bg-gray-400 border-0 px-8 py-6 text-lg rounded-none"
+            className="bg-white text-black hover:bg-gray-400 border-0 px-8 py-6 text-lg rounded-md"
           >
-            ENTER
+            Start Shopping
           </Button>
         </div>
       ) : (

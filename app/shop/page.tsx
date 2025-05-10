@@ -126,7 +126,7 @@ export default function ShopPage() {
                 </div>
                 <h3 className="text-lg font-medium">VERTURA Signature Tee</h3>
                 <p className="text-gray-600 mb-2">Limited Edition</p>
-                <p className="font-bold text-gray-600">$89.00</p>
+                <p className="font-bold text-gray-600">Rp150.000</p>
               </div>
             ))}
           </div>
