@@ -63,7 +63,7 @@ export default function ShopPage() {
             <div className="inline-block px-4 py-1 border border-white text-white text-sm mb-4">PREMIUM COLLECTION</div>
             <h1 className="text-5xl md:text-7xl font-bold mb-4">WEAR THE CULTURE</h1>
             <p className="text-xl mb-8 text-white/80">RISE UP WITH A TWIST</p>
-            <Button className="bg-black text-white hover:from-amber-600 hover:to-amber-700 border-0 px-8 py-6 text-lg rounded-none">
+            <Button className="bg-white text-black hover:bg-gray-500 border-0 px-8 py-6 text-lg rounded-none">
               SHOP NOW
             </Button>
           </div>
