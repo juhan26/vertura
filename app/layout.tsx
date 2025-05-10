@@ -4,7 +4,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Vertura',
   description: 'Wear the culture, rise up with a twist',
-  generator: 'v0.dev',
+  generator: 'Vertura Development Team',
 }
 
 export default function RootLayout({
@@ -14,6 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/logo2.png" type="image/png"  />
+      </head>
       <body>{children}</body>
     </html>
   )
