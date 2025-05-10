@@ -1,34 +1,57 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function PremiumIntro() {
-  const [step, setStep] = useState(0)
-  const router = useRouter()
+  const [step, setStep] = useState(0);
+  const [currentBg, setCurrentBg] = useState(0);
+  const router = useRouter();
+
+  const gifBackgrounds = [
+    "https://64.media.tumblr.com/db8472cfbb89a155148003b053d5f3de/4d6d987e0cee7307-8e/s400x225/158142e8e876044a6191733a02f6ee5ac1643b58.gif",
+    "https://i.pinimg.com/originals/14/f4/35/14f435eaaf8d107cca5055ce150eaf47.gif",
+  ];
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setStep(1), 1000), // Reveal ticket
-      setTimeout(() => setStep(2), 3000), // Boarding pass scan effect
-      setTimeout(() => setStep(3), 4500), // Reveal brand
-      setTimeout(() => router.push("/shop"), 8500), // Navigate to shop
-    ]
+    const bgInterval = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % gifBackgrounds.length);
+    }, 5000);
 
-    return () => timers.forEach((timer) => clearTimeout(timer))
-  }, [router])
+    const timers = [
+      setTimeout(() => setStep(1), 1000),
+      setTimeout(() => setStep(2), 3000),
+      setTimeout(() => setStep(3), 4500),
+      setTimeout(() => router.push("/shop"), 8500),
+    ];
+
+    return () => {
+      clearInterval(bgInterval);
+      timers.forEach((timer) => clearTimeout(timer));
+    };
+  }, [router]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#0a0f1c] flex items-center justify-center">
-      {/* Background pattern - subtle grid */}
-      <div className="absolute inset-0 opacity-10">
+    <div
+      className="relative w-full h-screen overflow-hidden flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${gifBackgrounds[currentBg]})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Overlay gelap agar teks tetap terbaca */}
+      <div className="absolute inset-0 bg-black/50 z-0" />
+
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 opacity-10 z-10">
         <div className="h-full w-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTZoLTJ2LTRoMnY0eiIvPjwvZz48L2c+PC9zdmc+')]" />
       </div>
 
-      {/* Animated elements */}
-      <div className="relative w-full max-w-2xl mx-auto px-4">
-        {/* Ticket/Boarding Pass */}
+      {/* Animated content */}
+      <div className="relative w-full max-w-2xl mx-auto px-4 z-20">
         <motion.div
           className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg overflow-hidden"
           initial={{ opacity: 0, y: 100 }}
@@ -43,16 +66,22 @@ export default function PremiumIntro() {
             height: { delay: 0.5, duration: 0.8 },
           }}
         >
-          {/* Ticket Header */}
+          {/* Header */}
           <div className="flex justify-between items-center p-6 border-b border-white/10">
             <div className="flex items-center">
               <motion.div
-                className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-700 flex items-center justify-center"
+                className="w-10 h-10 rounded-full bg-transparent flex items-center justify-center"
                 initial={{ scale: 0 }}
                 animate={{ scale: step >= 1 ? 1 : 0 }}
                 transition={{ delay: 1.2, duration: 0.5 }}
               >
-                <span className="text-white font-bold">V</span>
+                <Image
+                  src="/logo.png"
+                  alt="Vertura Icon"
+                  width={20}
+                  height={20}
+                  className="" 
+                />
               </motion.div>
               <motion.div
                 className="ml-3"
@@ -60,7 +89,9 @@ export default function PremiumIntro() {
                 animate={{ opacity: step >= 1 ? 1 : 0, x: step >= 1 ? 0 : -20 }}
                 transition={{ delay: 1.4, duration: 0.5 }}
               >
-                <div className="text-white font-light text-xs">PREMIUM CULTURE</div>
+                <div className="text-white font-light text-xs">
+                  PREMIUM CULTURE
+                </div>
                 <div className="text-white font-medium">VERTURA AIRLINES</div>
               </motion.div>
             </div>
@@ -71,11 +102,13 @@ export default function PremiumIntro() {
               transition={{ delay: 1.6, duration: 0.5 }}
             >
               <div className="text-white/70 text-xs">BOARDING PASS</div>
-              <div className="text-white font-light">{new Date().toLocaleDateString()}</div>
+              <div className="text-white font-light">
+                {new Date().toLocaleDateString()}
+              </div>
             </motion.div>
           </div>
 
-          {/* Ticket Content */}
+          {/* Content */}
           <div className="p-6">
             <div className="flex justify-between mb-6">
               <motion.div
@@ -129,7 +162,7 @@ export default function PremiumIntro() {
             </div>
           </div>
 
-          {/* Barcode Section */}
+          {/* Barcode */}
           {step >= 2 && (
             <motion.div
               className="mt-4 p-6 border-t border-white/10"
@@ -139,7 +172,6 @@ export default function PremiumIntro() {
             >
               <div className="flex justify-center">
                 <div className="relative">
-                  {/* Barcode */}
                   <div className="h-16 w-64 flex items-center">
                     {[...Array(30)].map((_, i) => (
                       <motion.div
@@ -156,8 +188,6 @@ export default function PremiumIntro() {
                       />
                     ))}
                   </div>
-
-                  {/* Scan effect */}
                   <motion.div
                     className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"
                     initial={{ x: -100, opacity: 0 }}
@@ -170,36 +200,35 @@ export default function PremiumIntro() {
                   />
                 </div>
               </div>
-
-              <div className="text-center text-white/50 text-xs mt-2">SCAN TO BOARD</div>
+              <div className="text-center text-white/50 text-xs mt-2">
+                SCAN TO BOARD
+              </div>
             </motion.div>
           )}
         </motion.div>
 
-        {/* Brand Reveal */}
         {step >= 3 && (
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-[#0a0f1c]/0 via-[#0a0f1c]/90 to-[#0a0f1c]"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-[#0a0f1c]/0 via-[#0a0f1c]/90 to-[#0a0f1c] z-30"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <motion.h1
-              className="text-6xl md:text-8xl font-bold text-white mb-2"
+            <motion.img
+              src="/vertura.png"
+              alt="Vertura Logo"
+              className="h-20 md:h-64"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              VERTURA
-            </motion.h1>
+            />
 
             <motion.div
-              className="h-0.5 w-16 bg-amber-500 mx-auto mb-4"
+              className="h-0.5 w-16 bg-[#7EBDE6] mx-auto mb-4"
               initial={{ width: 0 }}
               animate={{ width: 64 }}
               transition={{ delay: 1, duration: 0.8 }}
             />
-
             <motion.p
               className="text-xl md:text-2xl text-white/80"
               initial={{ opacity: 0 }}
@@ -212,5 +241,5 @@ export default function PremiumIntro() {
         )}
       </div>
     </div>
-  )
+  );
 }
