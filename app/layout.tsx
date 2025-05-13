@@ -1,5 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from 'next'
 import './globals.css'
+import { CartProviderClient } from '@/components/cart-provider-client'
 
 export const metadata: Metadata = {
   title: 'Vertura',
@@ -15,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logo2.png" type="image/png"  />
+        <link rel="icon" href="/logo2.png" type="image/png" />
       </head>
-      <body>{children}</body>
+      <body>
+        <CartProviderClient>{children}</CartProviderClient>
+      </body>
     </html>
   )
 }

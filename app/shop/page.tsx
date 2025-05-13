@@ -1,11 +1,69 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ShoppingBag, Heart, Menu, Search, User } from "lucide-react";
-import Image from "next/image";
+"use client"
+
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ShoppingBag, Heart, Menu, Search, User } from "lucide-react"
+import Image from "next/image"
+import { useCart } from "@/context/cart-context"
+import CartSidebar from "@/components/cart-sidebar"
+import ProductCard from "@/components/product-card"
+
+// Sample product data
+const products = [
+  {
+    id: 1,
+    name: "Monte Carlo Boxy Tee - White",
+    price: 169000,
+    description: "Monaco Series",
+    imageSrc: "/product.png",
+  },
+  // {
+  //   id: 2,
+  //   name: "VERTURA Culture Hoodie",
+  //   price: 389000,
+  //   description: "Premium Collection",
+  //   imageSrc: "/product.png",
+  // },
+  // {
+  //   id: 3,
+  //   name: "VERTURA Urban Jacket",
+  //   price: 459000,
+  //   description: "New Arrival",
+  //   imageSrc: "/product.png",
+  // },
+  // {
+  //   id: 4,
+  //   name: "VERTURA Essential Pants",
+  //   price: 329000,
+  //   description: "Bestseller",
+  //   imageSrc: "/product.png",
+  // },
+]
 
 export default function ShopPage() {
+  // Initialize cart state with default values
+  const initialCartState = {
+    isCartOpen: false,
+    setIsCartOpen: (isOpen: boolean) => {},
+    totalItems: 0,
+  }
+
+  // Call the useCart hook unconditionally
+  let cartState
+  try {
+    cartState = useCart()
+  } catch (error) {
+    console.error("Cart context not available:", error)
+    cartState = initialCartState // Use default values if context is not available
+  }
+
+  const { isCartOpen, setIsCartOpen, totalItems } = cartState
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Cart Sidebar */}
+      <CartSidebar />
+
       {/* Header */}
       <header className="border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
@@ -25,34 +83,13 @@ export default function ShopPage() {
             </div>
 
             <nav className="hidden md:flex items-center space-x-8">
-              <Link
-                href="/shop"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
+              <Link href="/shop" className="text-sm font-medium hover:underline underline-offset-4">
                 NEW ARRIVALS
               </Link>
-              <Link
-                href="/shop"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
-                MEN
-              </Link>
-              <Link
-                href="/shop"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
-                WOMEN
-              </Link>
-              <Link
-                href="/shop"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
+              <Link href="/shop" className="text-sm font-medium hover:underline underline-offset-4">
                 COLLECTIONS
               </Link>
-              <Link
-                href="/shop"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
+              <Link href="/shop" className="text-sm font-medium hover:underline underline-offset-4">
                 ABOUT
               </Link>
             </nav>
@@ -61,18 +98,19 @@ export default function ShopPage() {
               <Search className="h-5 w-5" />
               <User className="h-5 w-5" />
               <Heart className="h-5 w-5" />
-              <div className="relative">
+              <button className="relative" onClick={() => setIsCartOpen(true)}>
                 <ShoppingBag className="h-5 w-5" />
-                <span className="absolute -top-2 -right-2 bg-[#7EBDE6] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  0
-                </span>
-              </div>
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#7EBDE6] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="relative h-[70vh] bg-gray-100 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <div className="w-full h-full bg-gradient-to-r from-[#0a0f1c] to-[#1a2542]"></div>
@@ -80,12 +118,8 @@ export default function ShopPage() {
         </div>
         <div className="relative z-10 text-white container mx-auto px-4">
           <div className="max-w-xl">
-            <div className="inline-block px-4 py-1 border border-white text-white text-sm mb-4">
-              PREMIUM COLLECTION
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-4">
-              WEAR THE CULTURE
-            </h1>
+            <div className="inline-block px-4 py-1 border border-white text-white text-sm mb-4">PREMIUM COLLECTION</div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-4">WEAR THE CULTURE</h1>
             <p className="text-xl mb-8 text-white/80">RISE UP WITH A TWIST</p>
             <Button className="bg-white text-black hover:bg-gray-500 border-0 px-8 py-6 text-lg rounded-none">
               SHOP NOW
@@ -110,31 +144,20 @@ export default function ShopPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="group">
-                <div className="relative overflow-hidden mb-4">
-                  <div className="w-full aspect-[3/4] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                    <span className="text-gray-500">Product {item}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Button
-                    variant="outline"
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  >
-                    Quick View
-                  </Button>
-                </div>
-                <h3 className="text-lg font-medium">VERTURA Signature Tee</h3>
-                <p className="text-gray-600 mb-2">Limited Edition</p>
-                <p className="font-bold text-gray-600">Rp150.000</p>
-              </div>
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                description={product.description}
+                imageSrc={product.imageSrc}
+              />
             ))}
           </div>
 
           <div className="mt-16 text-center md:hidden">
-            <Button className="bg-black text-white hover:bg-black/90 px-8 py-6 text-lg rounded-none">
-              VIEW ALL
-            </Button>
+            <Button className="bg-black text-white hover:bg-black/90 px-8 py-6 text-lg rounded-none">VIEW ALL</Button>
           </div>
         </div>
       </section>
@@ -144,18 +167,14 @@ export default function ShopPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Our Cultural Heritage
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Cultural Heritage</h2>
               <p className="text-white/80 mb-6">
-                VERTURA blends traditional craftsmanship with contemporary
-                design. Each piece tells a story of cultural heritage and modern
-                expression.
+                VERTURA blends traditional craftsmanship with contemporary design. Each piece tells a story of cultural
+                heritage and modern expression.
               </p>
               <p className="text-white/80 mb-8">
-                Our premium fabrics and attention to detail create clothing
-                that's not just worn, but experienced. Rise up with us and twist
-                the ordinary into extraordinary.
+                Our premium fabrics and attention to detail create clothing that's not just worn, but experienced. Rise
+                up with us and twist the ordinary into extraordinary.
               </p>
               <Button className="bg-white rounded-md text-black hover:bg-gray-500 border-0 px-8 py-4 text-lg">
                 DISCOVER OUR STORY
@@ -187,9 +206,7 @@ export default function ShopPage() {
                   priority
                 />
               </div>
-              <p className="text-gray-400">
-                Wear the Culture. Rise Up With A Twist.
-              </p>
+              <p className="text-gray-400">Wear the Culture. Rise Up With A Twist.</p>
             </div>
 
             <div>
@@ -198,16 +215,6 @@ export default function ShopPage() {
                 <li>
                   <Link href="#" className="text-gray-400 hover:text-amber-500">
                     New Arrivals
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-400 hover:text-amber-500">
-                    Men
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-gray-400 hover:text-amber-500">
-                    Women
                   </Link>
                 </li>
                 <li>
@@ -246,26 +253,20 @@ export default function ShopPage() {
 
             <div>
               <h4 className="text-lg font-medium mb-4">Stay Connected</h4>
-              <p className="text-gray-400 mb-4">
-                Subscribe to our newsletter for exclusive updates and offers.
-              </p>
+              <p className="text-gray-400 mb-4">Subscribe to our newsletter for exclusive updates and offers.</p>
               <div className="flex">
                 <input
                   type="email"
                   placeholder="Your email"
                   className="bg-white/10 border-0 px-4 py-2 flex-grow focus:ring-amber-500 focus:border-amber-500"
                 />
-                <Button className="bg-white text-black hover:bg-gray-500 border-0 rounded-none">
-                  Subscribe
-                </Button>
+                <Button className="bg-white text-black hover:bg-gray-500 border-0 rounded-none">Subscribe</Button>
               </div>
             </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">
-              © {new Date().getFullYear()} VERTURA. All rights reserved.
-            </p>
+            <p className="text-gray-400">© {new Date().getFullYear()} VERTURA. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="#" className="text-gray-400 hover:text-amber-500">
                 Instagram
@@ -284,5 +285,5 @@ export default function ShopPage() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
