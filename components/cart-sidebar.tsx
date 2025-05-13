@@ -26,7 +26,7 @@ export default function CartSidebar() {
 
     const encodedMessage = encodeURIComponent(message)
 
-    const whatsappNumber = "6282266011860"
+    const whatsappNumber = "6285190327577"
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank")
   }
