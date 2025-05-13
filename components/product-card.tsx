@@ -20,7 +20,7 @@ export default function ProductCard({ id, name, price, description, imageSrc }: 
   const [showSizeError, setShowSizeError] = useState(false)
   const { addItem, setIsCartOpen } = useCart()
 
-  const sizes = ["S", "M", "L", "XL", "XXL"]
+  const sizes = ["M", "L", "XL"]
 
   const handleAddToCart = () => {
     if (!selectedSize) {
