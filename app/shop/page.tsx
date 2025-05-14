@@ -113,7 +113,14 @@ export default function ShopPage() {
 
       <section className="relative h-[70vh] bg-gray-100 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <div className="w-full h-full bg-gradient-to-r from-[#0a0f1c] to-[#1a2542]"></div>
+          <Image
+            src="/banner.png"
+            alt="Banner"
+            layout="fill"
+            objectFit="cover"
+            className="w-full h-full"
+            priority
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1c]/70 to-transparent"></div>
         </div>
         <div className="relative z-10 text-white container mx-auto px-4">
