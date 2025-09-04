@@ -1,97 +1,62 @@
+// components/product-card.tsx
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { useCart, type CartItem } from "@/context/cart-context"
-import { formatCurrency } from "@/lib/utils"
-import { ShoppingBag } from "lucide-react"
+import Link from "next/link"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { useCart } from "@/context/cart-context"
 
-type ProductCardProps = {
+interface ProductCardProps {
   id: number
   name: string
-  price: number
+  price: number 
   description: string
   imageSrc: string
+  color: string
 }
 
-export default function ProductCard({ id, name, price, description, imageSrc }: ProductCardProps) {
-  const [selectedSize, setSelectedSize] = useState<string>("")
-  const [showSizeError, setShowSizeError] = useState(false)
+export default function ProductCard({ id, name, price, description, imageSrc, color }: ProductCardProps) {
   const { addItem, setIsCartOpen } = useCart()
 
-  const sizes = ["M", "L", "XL"]
-
-  const handleAddToCart = () => {
-    if (!selectedSize) {
-      setShowSizeError(true)
-      return
-    }
-
-    const item: CartItem = {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addItem({
       id,
       name,
       price,
-      size: selectedSize,
-      image: `product-${id}`,
+      size: 'M',
+      imageSrc: imageSrc || "/placeholder-image.jpg", // Berikan fallback
       quantity: 1,
-    }
-
-    addItem(item)
+      color
+    })
+    // Buka sidebar cart otomatis
     setIsCartOpen(true)
-    setShowSizeError(false)
   }
 
   return (
-    <div className="group">
-      <div className="relative overflow-hidden mb-4">
-        <div className="w-full aspect-[3/4] bg-gray-100 flex items-center justify-center relative rounded">
-          <Image src={imageSrc || "/placeholder.svg"} alt={name} layout="fill" objectFit="cover" className="rounded" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <Link href={`/product/${id}`} className="group">
+      <div className="relative overflow-hidden">
+        <Image
+          src={imageSrc || "/placeholder-image.jpg"} // Berikan fallback
+          alt={name}
+          width={300}
+          height={400}
+          className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
         <Button
-          variant="outline"
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           onClick={handleAddToCart}
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white hover:bg-gray-800 rounded-none px-8"
         >
-          Quick Add
+          Add to Cart
         </Button>
       </div>
-
-      <h3 className="text-lg font-medium">{name}</h3>
-      <p className="text-gray-600 mb-2">{description}</p>
-      <p className="font-bold text-gray-600 mb-3">{formatCurrency(price)}</p>
-
-      <div className="mb-3">
-        <p className="text-sm text-gray-600 mb-1">Ukuran:</p>
-        <div className="flex gap-2">
-          {sizes.map((size) => (
-            <button
-              key={size}
-              className={`w-10 h-10 flex items-center justify-center border ${
-                selectedSize === size
-                  ? "border-[#7EBDE6] bg-[#7EBDE6]/10 text-[#7EBDE6]"
-                  : "border-gray-300 hover:border-gray-400"
-              }`}
-              onClick={() => {
-                setSelectedSize(size)
-                setShowSizeError(false)
-              }}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-        {showSizeError && <p className="text-red-500 text-xs mt-1">Silakan pilih ukuran</p>}
+      <div className="mt-4">
+        <h3 className="font-medium text-lg mb-1">{name}</h3>
+        <p className="text-gray-600 text-sm mb-2">{description}</p>
+        <p className="font-bold">Rp {price.toLocaleString('id-ID')}</p>
       </div>
-
-      <Button
-        className="w-full bg-[#7EBDE6] hover:bg-[#6ba9d2] flex items-center justify-center gap-2"
-        onClick={handleAddToCart}
-      >
-        <ShoppingBag className="h-4 w-4" />
-        Tambahkan ke Keranjang
-      </Button>
-    </div>
+    </Link>
   )
 }

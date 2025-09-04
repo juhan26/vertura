@@ -7,64 +7,40 @@ import Image from "next/image"
 import { useCart } from "@/context/cart-context"
 import CartSidebar from "@/components/cart-sidebar"
 import ProductCard from "@/components/product-card"
+import SponsorshipStories from "@/components/ui/sponsorship"
 
-// Sample product data
 const products = [
   {
     id: 1,
     name: "Monte Carlo Boxy Tee - White",
     price: 169000,
     description: "Monaco Series",
-    imageSrc: "/product.png",
+    imageSrc: "/front.jpeg",
+    color: "White"
   },
-  // {
-  //   id: 2,
-  //   name: "VERTURA Culture Hoodie",
-  //   price: 389000,
-  //   description: "Premium Collection",
-  //   imageSrc: "/product.png",
-  // },
-  // {
-  //   id: 3,
-  //   name: "VERTURA Urban Jacket",
-  //   price: 459000,
-  //   description: "New Arrival",
-  //   imageSrc: "/product.png",
-  // },
-  // {
-  //   id: 4,
-  //   name: "VERTURA Essential Pants",
-  //   price: 329000,
-  //   description: "Bestseller",
-  //   imageSrc: "/product.png",
-  // },
 ]
 
 export default function ShopPage() {
-  // Initialize cart state with default values
   const initialCartState = {
     isCartOpen: false,
     setIsCartOpen: (isOpen: boolean) => {},
     totalItems: 0,
   }
 
-  // Call the useCart hook unconditionally
   let cartState
   try {
     cartState = useCart()
   } catch (error) {
     console.error("Cart context not available:", error)
-    cartState = initialCartState // Use default values if context is not available
+    cartState = initialCartState 
   }
 
   const { isCartOpen, setIsCartOpen, totalItems } = cartState
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Cart Sidebar */}
       <CartSidebar />
 
-      {/* Header */}
       <header className="border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -89,6 +65,9 @@ export default function ShopPage() {
               <Link href="/shop" className="text-sm font-medium hover:underline underline-offset-4">
                 COLLECTIONS
               </Link>
+              <Link href="#sponsorships" className="text-sm font-medium hover:underline underline-offset-4">
+                OUR STORIES
+              </Link>
               <Link href="/shop" className="text-sm font-medium hover:underline underline-offset-4">
                 ABOUT
               </Link>
@@ -111,6 +90,7 @@ export default function ShopPage() {
         </div>
       </header>
 
+      {/* Hero Banner */}
       <section className="relative h-[70vh] bg-gray-100 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
@@ -128,9 +108,11 @@ export default function ShopPage() {
             <div className="inline-block px-4 py-1 border border-white text-white text-sm mb-4">PREMIUM COLLECTION</div>
             <h1 className="text-5xl md:text-7xl font-bold mb-4">WEAR THE CULTURE</h1>
             <p className="text-xl mb-8 text-white/80">RISE UP WITH A TWIST</p>
-            <Button className="bg-white text-black hover:bg-gray-500 border-0 px-8 py-6 text-lg rounded-none">
-              SHOP NOW
-            </Button>
+            <Link href="/shop">
+              <Button className="bg-white text-black hover:bg-gray-500 border-0 px-8 py-6 text-lg rounded-none">
+                SHOP NOW
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -159,15 +141,23 @@ export default function ShopPage() {
                 price={product.price}
                 description={product.description}
                 imageSrc={product.imageSrc}
+                color={product.color}
               />
             ))}
           </div>
 
           <div className="mt-16 text-center md:hidden">
-            <Button className="bg-black text-white hover:bg-black/90 px-8 py-6 text-lg rounded-none">VIEW ALL</Button>
+            <Link href="/shop">
+              <Button className="bg-black text-white hover:bg-black/90 px-8 py-6 text-lg rounded-none">VIEW ALL</Button>
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* NEW: Sponsorship Stories Section */}
+      <div id="sponsorships">
+        <SponsorshipStories />
+      </div>
 
       {/* Culture Section */}
       <section className="py-16 bg-[#0a0f1c] text-white">

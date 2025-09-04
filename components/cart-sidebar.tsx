@@ -1,3 +1,4 @@
+// components/cart-sidebar.tsx
 "use client"
 
 import { useCart } from "@/context/cart-context"
@@ -5,6 +6,7 @@ import { X, Plus, Minus, ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { formatCurrency } from "@/lib/utils"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function CartSidebar() {
   const { items, removeItem, updateQuantity, isCartOpen, setIsCartOpen, totalItems, totalPrice } = useCart()
@@ -15,6 +17,7 @@ export default function CartSidebar() {
 
     items.forEach((item, index) => {
       message += `${index + 1}. ${item.name}\n`
+      message += `   Warna: ${item.color}\n`
       message += `   Ukuran: ${item.size}\n`
       message += `   Harga: ${formatCurrency(item.price)}\n`
       message += `   Jumlah: ${item.quantity}\n`
@@ -25,7 +28,6 @@ export default function CartSidebar() {
     message += "Mohon diproses. Terima kasih!"
 
     const encodedMessage = encodeURIComponent(message)
-
     const whatsappNumber = "6285190327577"
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank")
@@ -65,13 +67,31 @@ export default function CartSidebar() {
           <>
             <div className="flex-1 overflow-auto p-4">
               {items.map((item) => (
-                <div key={`${item.id}-${item.size}`} className="flex border-b py-4">
+                <div key={`${item.id}-${item.size}-${item.color}`} className="flex border-b py-4">
                   <div className="w-20 h-20 bg-gray-200 mr-4 flex-shrink-0 relative overflow-hidden rounded">
-                    {item.image === "product-1" ? (
-                      <Image src="/product.png" alt={item.name} layout="fill" objectFit="cover" />
+                    {item.imageSrc && item.imageSrc !== "" ? (
+                      <Image
+                        src={item.imageSrc}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          // Fallback jika gambar error
+                          const target = e.currentTarget as HTMLImageElement
+                          target.style.display = 'none'
+                          const parent = target.parentElement
+                          if (parent) {
+                            parent.innerHTML = `
+                              <div class="w-full h-full flex items-center justify-center bg-gray-200">
+                                <span class="text-gray-500 text-xs">Gambar tidak tersedia</span>
+                              </div>
+                            `
+                          }
+                        }}
+                      />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                        <span className="text-gray-500 text-xs">Product {item.id}</span>
+                        <span className="text-gray-500 text-xs">Gambar tidak tersedia</span>
                       </div>
                     )}
                   </div>
@@ -85,6 +105,7 @@ export default function CartSidebar() {
                         <X className="h-4 w-4" />
                       </button>
                     </div>
+                    <p className="text-gray-500 text-sm">Warna: {item.color}</p>
                     <p className="text-gray-500 text-sm">Ukuran: {item.size}</p>
                     <p className="text-[#7EBDE6] font-medium">{formatCurrency(item.price)}</p>
                     <div className="flex items-center mt-2">
