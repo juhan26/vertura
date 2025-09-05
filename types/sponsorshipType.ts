@@ -1,5 +1,7 @@
 // types/sponsorship.ts
 
+import { StaticImageData } from "next/image"
+
 export interface SponsorshipStory {
     brief: string
     details: string
@@ -13,7 +15,7 @@ export interface SponsorshipStory {
     date: string
     location: string
     category: string
-    imageSrc: string
+    imageSrc: StaticImageData
     story: SponsorshipStory
     participants: number
     mediaReach: string

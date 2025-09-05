@@ -1,15 +1,26 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import { Button } from "@/components/ui/button"
+import ons1 from "@/public/events/boxing/ons1.jpg"
+import ons2 from "@/public/events/boxing/ons2.jpg"
+import ons3 from "@/public/events/boxing/ons3.jpg"
+import ons4 from "@/public/events/boxing/ons4.jpg"
+import ons5 from "@/public/events/boxing/ons5.jpg"
+import ons6 from "@/public/events/boxing/ons6.jpg"
+import ons7 from "@/public/events/boxing/ons7.jpg"
+import sos1 from "@/public/events/SOS/sos1.jpg"
+import sos2 from "@/public/events/SOS/sos2.jpg"
+import sos3 from "@/public/events/SOS/sos3.jpg"
+import sos4 from "@/public/events/SOS/sos4.jpg"
+import sos5 from "@/public/events/SOS/sos5.jpg"
 import { Calendar, MapPin, Users, Heart, ArrowRight, Camera, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { SponsorshipEvent, FilterCategory } from "@/types/sponsorshipType"
 
-// Extended interface to include gallery
 interface GalleryImage {
   id: number
-  src: string
+  src: StaticImageData
   caption: string
   category: "behind-scenes" | "runway" | "crowd" | "product" | "artist"
 }
@@ -25,7 +36,7 @@ const sponsorshipEvents: ExtendedSponsorshipEvent[] = [
     date: "July 14 (Every Tuesday), 2025",
     location: "SOSKATE PARK",
     category: "Skate",
-    imageSrc: "/events/SOS/sos5.jpg",
+    imageSrc: sos5,
     story: {
       brief: "VERTURA became the official streetwear partner for SOS, where our Monte Carlo collection made waves on the skate area.",
       details: "Ketika lampu sorot menyinari area skate di SOS, ada 2 orang model mengenakan koleksi terbaru VERTURA. Momen ini bukan hanya tentang fashion, tapi tentang bagaimana budaya lokal bertemu. Fotografer backstage menangkap candid moments para model yang dengan bangga mengenakan Monte Carlo Boxy Tee, menciptakan buzz di media sosial dengan hashtag #WearTheCultureWithATwist.",
@@ -36,11 +47,11 @@ const sponsorshipEvents: ExtendedSponsorshipEvent[] = [
     mediaReach: "100++ peoples",
     featured: true,
     gallery: [
-      { id: 1, src: "/events/SOS/sos1.jpg", caption: "Model backstage menggunakan Monte Carlo Boxy Tee", category: "product" },
-      { id: 2, src: "/events/SOS/sos2.jpg", caption: "VERTURA collection di runway SOS 2024", category: "product" },
-      { id: 3, src: "/events/SOS/sos3.jpg", caption: "Audience reaction saat VERTURA showcase", category: "product" },
-      { id: 4, src: "/events/SOS/sos4.jpg", caption: "Detail Monte Carlo collection", category: "product" },
-      { id: 5, src: "/events/SOS/sos5.jpg", caption: "Tim VERTURA bersama model", category: "product" },
+      { id: 1, src: sos1, caption: "Model backstage menggunakan Monte Carlo Boxy Tee", category: "product" },
+      { id: 2, src: sos2, caption: "VERTURA collection di runway SOS 2025", category: "product" },
+      { id: 3, src: sos3, caption: "Audience reaction saat VERTURA showcase", category: "product" },
+      { id: 4, src: sos4, caption: "Detail Monte Carlo collection", category: "product" },
+      { id: 5, src: sos5, caption: "Tim VERTURA bersama model", category: "product" },
     ]
   },
   {
@@ -49,7 +60,7 @@ const sponsorshipEvents: ExtendedSponsorshipEvent[] = [
     date: "September 8, 2023",
     location: "Auditorium M. Yusuf Abu Bakar | Universitas Mataram",
     category: "Boxing",
-    imageSrc: "/events/boxing/ons3.jpg",
+    imageSrc: ons3,
     story: {
       brief: "VERTURA menjadi apparel partner eksklusif untuk ajang tinju profesional terbesar di Indonesia, mendandani atlet dan crew dengan koleksi premium.",
       details: "Di bawah sorotan lampu Istora Senayan, VERTURA hadir sebagai bagian tak terpisahkan dari energi petinju profesional Indonesia. Setiap atlet yang tampil mengenakan robe khusus VERTURA dengan desain yang mencerminkan semangat juang dan ketangguhan. Backstage, terlihat para cornerman dan official event menggunakan apparel VERTURA yang nyaman namun tetap stylish. Dokumentasi photography menangkap momen-momen intens seperti persiapan petinju, duel di ring, dan celebrasi kemenangan - semuanya dengan sentuhan fashion streetwear yang menjadi signature VERTURA. Kolaborasi ini membuktikan bahwa brand culture dapat menyatu dengan semangat olahraga yang penuh adrenalin.",
@@ -60,13 +71,13 @@ const sponsorshipEvents: ExtendedSponsorshipEvent[] = [
     mediaReach: "1.2M",
     featured: true,
     gallery: [
-      { id: 1, src: "/events/boxing/ons1.jpg", caption: "Petinju menggunakan baju VERTURA", category: "product" },
-      { id: 2, src: "/events/boxing/ons2.jpg", caption: "Momen intens pertarungan di ring", category: "behind-scenes" },
-      { id: 3, src: "/events/boxing/ons3.jpg", caption: "Cornerman dengan apparel VERTURA backstage", category: "behind-scenes" },
-      { id: 4, src: "/events/boxing/ons4.jpg", caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
-      { id: 5, src: "/events/boxing/ons5.jpg", caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
-      { id: 6, src: "/events/boxing/ons6.jpg", caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
-      { id: 7, src: "/events/boxing/ons7.jpg", caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
+      { id: 1, src: ons1, caption: "Petinju menggunakan baju VERTURA", category: "product" },
+      { id: 2, src: ons2, caption: "Momen intens pertarungan di ring", category: "behind-scenes" },
+      { id: 3, src: ons3, caption: "Petinju dengan apparel VERTURA backstage", category: "behind-scenes" },
+      { id: 4, src: ons4, caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
+      { id: 5, src: ons5, caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
+      { id: 6, src: ons6, caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
+      { id: 7, src: ons7, caption: "Boxer collaboration VERTURA x Jayak (Main Event)", category: "product" },
     ]
   }
 ]
